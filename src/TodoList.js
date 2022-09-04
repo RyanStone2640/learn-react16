@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from 'react';
-import './todoList.css';
 import TodoItem from './TodoItem';
+import './todoList.css';
 
 // class TodoList extends Component {
 // 	constructor(props) {
@@ -13,8 +13,11 @@ import TodoItem from './TodoItem';
 // 
 // 	handlerInputChange = (e)=>{
 // 		// console.log(this)
-// 		this.setState({
-// 			inputValue: e.target.value
+//		const value = e.target.value
+// 		this.setState(()=>{
+// 			return {
+// 				inputValue: value
+// 			}
 // 		})
 // 	}
 // 
@@ -38,20 +41,24 @@ import TodoItem from './TodoItem';
 // }
 
 function TodoList(props) {
+	// data
 	const [inputValue, setInputValue] = useState('')
 	const [list, setList] = useState([])
+
+	// jsx 
 	const mapArr = list.map((item, index)=>{
 		return (
-			<Fragment>
-			<TodoItem content={item}></TodoItem>
-			{/* // <li  */}
-			{/* // 	key={index}  */}
-			{/* // 	onClick={()=>{handlerDelte(index)}} */}
-			{/* // >{item}</li>				 */}
-			</Fragment>
+			<TodoItem  
+				key={index}
+				content={item} 
+				index={index} 
+				handlerDelte={handlerDelte}
+			>
+			</TodoItem>
 		)
 	})
 	
+	// function
 	const handlerInputChange = (e)=>{
 			setInputValue(e.target.value)
 	}	
@@ -60,7 +67,7 @@ function TodoList(props) {
 		setInputValue('')
 	}
 
-	const handlerDelte = (index)=>{
+	function handlerDelte(index) {
 		const newlist = [...list];
 		newlist.splice(index, 1);
 		setList(newlist)
